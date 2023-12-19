@@ -176,3 +176,102 @@ const timeline = new TimelineVisualization();
 // Example: Trigger the timeline to show (you can integrate this with your Obsidian API)
 timeline.showTimeline();
 ```
+
+## Alternate gpt js pseudocode
+
+**mainscript.ts**
+```javascript
+// Import necessary modules and classes
+import obsidian from 'obsidian';
+import Chart from 'chart.js/auto';
+import './styles.css'; // Import your custom styles
+
+// Define the Obsidian API instance
+const obsidianAPI = new obsidian.ObsidianAPI();
+
+// Define the class for the TimelineVisualization
+class TimelineVisualization {
+    private timelineContainer: HTMLElement;
+    private isTimelineVisible: boolean = false;
+
+    constructor() {
+        this.timelineContainer = document.createElement('div');
+        this.timelineContainer.id = 'timeline-container';
+        document.body.appendChild(this.timelineContainer);
+    }
+
+    // Function to show the timeline
+    showTimeline() {
+        this.isTimelineVisible = true;
+        this.timelineContainer.style.display = 'block';
+        this.generateTimelineCirclesWithPieCharts();
+    }
+
+    // Function to hide the timeline
+    hideTimeline() {
+        this.isTimelineVisible = false;
+        this.timelineContainer.style.display = 'none';
+    }
+
+    // Function to generate timeline circles with pie charts
+    generateTimelineCirclesWithPieCharts() {
+        // Example data for pie charts (replace with your actual data)
+        const pieChartData = [20, 30, 50]; // Example: 20% Jan, 30% Feb, 50% Mar
+
+        // Loop through the data and create pie charts for each circle
+        pieChartData.forEach((data, index) => {
+            const circle = document.createElement('div');
+            circle.className = 'circle';
+            circle.addEventListener('click', () => this.handleCircleClick(index + 1)); // Example: Pass the year as an argument
+
+            // Create a canvas element for the pie chart
+            const chartCanvas = document.createElement('canvas');
+            chartCanvas.width = 20; // Adjust width and height as needed
+            chartCanvas.height = 20;
+            circle.appendChild(chartCanvas);
+
+            // Get the 2D context of the canvas
+            const ctx = chartCanvas.getContext('2d');
+
+            // Create a pie chart using Chart.js
+            new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar'], // Example: Months
+                    datasets: [{
+                        data: [data, 100 - data], // Example: Percentage for the current month
+                        backgroundColor: ['#3498db', '#ecf0f1'], // Example: Colors for the chart
+                    }],
+                },
+                options: {
+                    responsive: false,
+                    maintainAspectRatio: false,
+                },
+            });
+
+            this.timelineContainer.appendChild(circle);
+        });
+    }
+
+    // Function to handle click events on timeline circles
+    handleCircleClick(year: number) {
+        // Implement logic to handle the click event, e.g., fetching notes for the selected year
+        console.log(`Clicked on circle for year ${year}`);
+    }
+}
+
+// Create an instance of the TimelineVisualization class
+const timeline = new TimelineVisualization();
+
+// Add an icon to the right sidebar
+obsidianAPI.addIconToSidebar();
+
+// Register the click event for the timeline icon
+obsidianAPI.registerClickEvent('timeline-icon', () => {
+    if (timeline.isTimelineVisible) {
+        timeline.hideTimeline();
+    } else {
+        timeline.showTimeline();
+    }
+});
+```
