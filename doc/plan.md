@@ -49,6 +49,12 @@ I am not so sure about the size of the circles. Ideally I would want an option t
 - check if the display is needed
     - display the thing
 
+- `mainscript.ts`
+    - load the timeline
+    - bind the view to a button
+- `view.ts` 
+    - Input: daily note data. Output: timeline
+
 
 **main.py**
 ```python
