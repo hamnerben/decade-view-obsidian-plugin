@@ -1,9 +1,9 @@
 {
-	"id": "Daily-note-timeline",
-	"name": "Daily-note-timeline",
+	"id": "Decade-View",
+	"name": "Decade-View",
 	"version": "1.0.0",
 	"minAppVersion": "0.15.0",
-	"description": "Displays a fake timeline of your daily notes.",
+	"description": "Displays decade view from your daily notes.",
 	"author": "Ben Hamner",
 	"authorUrl": "https://obsidian.md",
 	"fundingUrl": "https://obsidian.md/pricing",

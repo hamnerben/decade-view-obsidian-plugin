@@ -2,8 +2,9 @@
 
 ## Stories
 
-- [ ] 1 pt - **make the plugin do something** follow the tutorial
-- [ ] 3 pt - **display text in obsidian** 
+- [X] 1 pt - **make the plugin do something** follow the tutorial
+- [X] 3 pt - **display text in obsidian** 
+- [ ] 3 pt - **display from data from daily notes in**
 - [ ] 3 pt - **research and setup d3**
 - [ ] 3 pt - **draw a donut in d3**
 
