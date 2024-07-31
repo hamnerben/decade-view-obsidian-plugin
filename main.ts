@@ -1,4 +1,6 @@
 import { Plugin, WorkspaceLeaf } from "obsidian";
+import { getAllDailyNotes } from "obsidian-daily-notes-interface";
+
 import { DecadeView, DECADE_VIEW } from "./view";
 
 export default class DailyNotePlugin extends Plugin {
@@ -8,8 +10,13 @@ export default class DailyNotePlugin extends Plugin {
       (leaf) => new DecadeView(leaf)
     );
 
-    this.addRibbonIcon("calendar", "Activate decade view", () => {
-      this.activateView();
+    // this.addRibbonIcon("calendar", "Activate decade view", () => {
+    //   this.activateView();
+    // });
+
+    this.addRibbonIcon("dice", "getNOte3e", () => {
+      const notes = getAllDailyNotes(); 
+      console.log( notes );
     });
   }
 

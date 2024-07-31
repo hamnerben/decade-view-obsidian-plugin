@@ -1,4 +1,6 @@
 import { ItemView, WorkspaceLeaf } from "obsidian";
+import { getAllDailyNotes } from "obsidian-daily-notes-interface";
+
 
 export const DECADE_VIEW = "decade-view";
 
@@ -19,9 +21,9 @@ export class DecadeView extends ItemView {
       const container = this.containerEl.children[1];
       container.empty();
       container.createEl("h4", { text: "Decade View" });
-      container.createEl("p", { text: "2019" });
-      container.createEl("p", { text: "2020" });
-      container.createEl("p", { text: "2021" });
+      container.createEl("p", { text: "LEt's see here" });
+      
+
     }
   
     async onClose() {
