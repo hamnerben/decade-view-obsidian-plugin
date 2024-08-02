@@ -1,5 +1,5 @@
 import { Plugin, WorkspaceLeaf } from "obsidian";
-import { getAllDailyNotes } from "obsidian-daily-notes-interface";
+import { getAllDailyNotes, getDateUID } from "obsidian-daily-notes-interface";
 
 import { DecadeView, DECADE_VIEW } from "./view";
 
