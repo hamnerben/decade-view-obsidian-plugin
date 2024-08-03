@@ -1,7 +1,9 @@
 import { Plugin, WorkspaceLeaf } from "obsidian";
 import { getAllDailyNotes, getDateUID } from "obsidian-daily-notes-interface";
 
-import { DecadeView, DECADE_VIEW } from "./view";
+import { DecadeView, DECADE_VIEW, createDailyNotesStore } from "./view";
+
+
 
 export default class DailyNotePlugin extends Plugin {
   async onload() {
@@ -14,9 +16,9 @@ export default class DailyNotePlugin extends Plugin {
     //   this.activateView();
     // });
 
-    this.addRibbonIcon("dice", "getNOte3e", () => {
-      const notes = getAllDailyNotes(); 
-      console.log( notes );
+    this.addRibbonIcon("dice", "geteeNOte3e", () => {
+      let store = createDailyNotesStore();
+      console.log(store.notes);
     });
   }
 
