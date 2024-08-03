@@ -18,7 +18,7 @@ export default class DailyNotePlugin extends Plugin {
 
     this.addRibbonIcon("dice", "geteeNOte3e", () => {
       let store = createDailyNotesStore();
-      console.log(store.notes);
+      console.log(store.years);
     });
   }
 
