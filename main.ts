@@ -12,9 +12,9 @@ export default class DailyNotePlugin extends Plugin {
       (leaf) => new DecadeView(leaf)
     );
 
-    // this.addRibbonIcon("calendar", "Activate decade view", () => {
-    //   this.activateView();
-    // });
+    this.addRibbonIcon("calendar", "Activate decade view", () => {
+      this.activateView();
+    });
 
     this.addRibbonIcon("dice", "geteeNOte3e", () => {
       let store = createDailyNotesStore();

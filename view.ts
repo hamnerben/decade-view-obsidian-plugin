@@ -1,3 +1,4 @@
+import * as exp from "constants";
 import { ItemView, TFile, WorkspaceLeaf } from "obsidian";
 import { getAllDailyNotes, getDateUID, getDateFromFile } from "obsidian-daily-notes-interface";
 
@@ -25,9 +26,13 @@ export function createDailyNotesStore() {
           years.get(year)?.set(uid, file);
       }
   });
+  const sortedYears = new Map([...years.entries()].sort((a, b) => a[0] - b[0]));
+  return sortedYears;
 
-  return years;
+}
 
+export function displayDecades() {
+  
 }
 
 export class DecadeView extends ItemView {
@@ -46,6 +51,7 @@ export class DecadeView extends ItemView {
     
 
     async onOpen() {
+      console.log("opening");
       const container = this.containerEl.children[1];
       container.empty();
       container.createEl("h4", { text: "Decade View" });
@@ -56,10 +62,13 @@ export class DecadeView extends ItemView {
         container.createEl("p", { text: `${year} (${notes.size})` });
       });
       container.createEl("p", { text: "LEt's see here" });
-      console.log("opening");
+
     }
   
     async onClose() {
       // Nothing to clean up.
+    }
+    async onFilesChanged() {
+      
     }
   }
