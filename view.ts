@@ -11,18 +11,18 @@ export const DECADE_VIEW = "decade-view";
  */
 export function createDailyNotesStore() {
   const notes = getAllDailyNotes(); // uid: Tfile
-  let years = new Map<number, Record<string, TFile>>();
+  let years = new Map<number, Map<string, TFile>>();
   
-  Object.entries(notes).forEach(([, file]) => {
+  Object.entries(notes).forEach(([uid, file]) => {
   
       const date = getDateFromFile(file, "day");
   
       if (date) {
         const year = date.year();
           if (!years.has(year)) {
-              years.set(year, []);
+              years.set(year, new Map());
           }
-          years.get(year)?.push(file);
+          years.get(year)?.set(uid, file);
       }
   });
 
@@ -51,8 +51,9 @@ export class DecadeView extends ItemView {
       container.createEl("h4", { text: "Decade View" });
 
       const store = createDailyNotesStore();
-      store.years.forEach((year) => {
-        container.createEl("p", { text: `${year} (${year.length})` });
+      console.log(store);
+      store.forEach((notes, year) => {
+        container.createEl("p", { text: `${year} (${notes.size})` });
       });
       container.createEl("p", { text: "LEt's see here" });
       console.log("opening");
