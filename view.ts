@@ -31,11 +31,22 @@ export function createDailyNotesStore() {
 
 }
 
-export function displayDecades() {
-  
-}
+ function displayDecades(container: Element) {
+    const store = createDailyNotesStore();
+      
+    container.empty();
+    container.createEl("h4", { text: "Decade View" });
 
+    store.forEach((notes, year) => {
+      container.createEl("p", { text: `${year} (${notes.size})` });
+      const ul = container.createEl("ul");
+      notes.forEach((note, uid) => {
+        ul.createEl("li", { text: note.basename });
+      });
+    });
+}
 export class DecadeView extends ItemView {
+  
     constructor(leaf: WorkspaceLeaf) {
       super(leaf);
     }
@@ -48,20 +59,12 @@ export class DecadeView extends ItemView {
       return "Decade-View";
     }
   
-    
+
 
     async onOpen() {
       console.log("opening");
-      const container = this.containerEl.children[1];
-      container.empty();
-      container.createEl("h4", { text: "Decade View" });
 
-      const store = createDailyNotesStore();
-      console.log(store);
-      store.forEach((notes, year) => {
-        container.createEl("p", { text: `${year} (${notes.size})` });
-      });
-      container.createEl("p", { text: "LEt's see here" });
+      this.renderView();
 
     }
   
@@ -69,6 +72,12 @@ export class DecadeView extends ItemView {
       // Nothing to clean up.
     }
     async onFilesChanged() {
-      
+      this.renderView();
     }
+
+    private renderView() {
+      const container = this.containerEl.children[1];
+      displayDecades(container);
+    }
+
   }
