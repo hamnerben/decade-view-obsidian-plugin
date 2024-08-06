@@ -48,7 +48,7 @@ export function createDailyNotesStore() {
     container.createEl("h4", { text: "Decdade View" });
 
     store.forEach((notes, year) => {
-      container.createEl("p", { text: `${year} (${notes.size})` });
+      container.createEl("h5", { text: `${year} (${notes.size})` });
       const ul = container.createEl("ul");
       notes.forEach((note, uid) => {
         ul.createEl("li", { text: note.basename });
