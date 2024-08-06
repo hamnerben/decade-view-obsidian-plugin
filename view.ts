@@ -54,7 +54,7 @@ export function createDailyNotesStore() {
         ul.createEl("li", { text: note.basename });
       });
     });
-    
+
 }
 export class DecadeView extends ItemView {
   private debouncedRender: () => void;
@@ -83,6 +83,9 @@ export class DecadeView extends ItemView {
       );
       this.registerEvent(
         this.app.vault.on("delete", () => this.debouncedRender())
+      );
+      this.registerEvent(
+        this.app.vault.on("rename", () => this.debouncedRender())
       );
      
   
