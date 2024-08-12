@@ -7,8 +7,12 @@
 - [X] 1 pt - **research how to query files**
 - [X] 2 pt - **display from data from daily notes in**
 - [X] 1 pt - **sorts notes and years, updates on files changes**
-- [ ] 2 pt - **research and setup d3**
-- [ ] 1 pt - **draw a donut in d3**
+- [X] 1 pt - **research how to use d3**
+- [X] 1 pt - **draw a donut in d3**
+- [ ] 1 pt - **how to get the order of items in the pie chart**
+- [ ] 1 pt - **display donut in obsidian**
+- [ ] 1 pt - **hook up donut with data**
+- [ ] 1 pt - **hook up colors** 
 
 
 ## Completed Stories

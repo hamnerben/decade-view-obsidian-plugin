@@ -281,3 +281,7 @@ obsidianAPI.registerClickEvent('timeline-icon', () => {
     }
 });
 ```
+
+# New design choice
+
+I want to have a pie slice for every week.  This will keep the design consistant.  I will make an empty week greyed out.

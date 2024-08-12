@@ -3,73 +3,132 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Donut Chart Example</title>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <title>Basic Donut Chart with D3.js</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
     <style>
-        canvas {
-            border: 1px solid #ddd;
+        .chart {
+            font-family: "Arial", sans-serif;
         }
+        body {
+    background-color: #292929;
+}
     </style>
 </head>
 <body>
-    <canvas id="donutChart" width="90" height="90"></canvas>
+    <div id="chart" class="chart"></div>
+
     <script>
-        // Get the canvas element
-        const canvas = document.getElementById('donutChart');
-        const ctx = canvas.getContext('2d');
+        // JavaScript code will go here
 
-        // Example data for donut chart
-        const donutChartData = [1,1,1,1,1,1,1,1,1,1,1,1]; // Example: 20% Jan, 30% Feb, 50% Mar
 
-        // Function to generate a random color
-        function getRandomColor() {
-            const letters = '0123456789ABCDEF';
-            let color = '#';
-            for (let i = 0; i < 6; i++) {
-                color += letters[Math.floor(Math.random() * 16)];
-            }
-            return color;
-        }
+        const data = [
+            { week: "Week 1", value: 1, days: 0, activeFile: false },
+            { week: "Week 2", value: 1, days: 0, activeFile: false },
+            { week: "Week 3", value: 1, days: 1, activeFile: false },
+            { week: "Week 4", value: 1, days: 3, activeFile: false },
+            { week: "Week 5", value: 1, days: 1, activeFile: false },
+            { week: "Week 6", value: 1, days: 7, activeFile: false },
+            { week: "Week 7", value: 1, days: 6, activeFile: false },
+            { week: "Week 8", value: 1, days: 4, activeFile: false },
+            { week: "Week 9", value: 1, days: 0, activeFile: false },
+            { week: "Week 10", value: 1, days: 2, activeFile: false },
+            { week: "Week 11", value: 1, days: 1, activeFile: false },
+            { week: "Week 12", value: 1, days: 4, activeFile: false },
+            { week: "Week 13", value: 1, days: 3, activeFile: false },
+            { week: "Week 14", value: 1, days: 1, activeFile: false },
+            { week: "Week 15", value: 1, days: 2, activeFile: false },
+            { week: "Week 16", value: 1, days: 3, activeFile: false },
+            { week: "Week 17", value: 1, days: 4, activeFile: false },
+            { week: "Week 18", value: 1, days: 1, activeFile: false },
+            { week: "Week 19", value: 1, days: 0, activeFile: false },
+            { week: "Week 20", value: 1, days: 0, activeFile: false },
+            { week: "Week 21", value: 1, days: 1, activeFile: false },
+            { week: "Week 22", value: 1, days: 2, activeFile: false },
+            { week: "Week 23", value: 1, days: 4, activeFile: false },
+            { week: "Week 24", value: 1, days: 3, activeFile: false },
+            { week: "Week 25", value: 1, days: 2, activeFile: false },
+            { week: "Week 26", value: 1, days: 1, activeFile: false },
+            { week: "Week 27", value: 1, days: 0, activeFile: false },
+            { week: "Week 28", value: 1, days: 2, activeFile: false },
+            { week: "Week 29", value: 1, days: 3, activeFile: false },
+            { week: "Week 30", value: 1, days: 2, activeFile: false },
+            { week: "Week 31", value: 1, days: 1, activeFile: false },
+            { week: "Week 32", value: 1, days: 3, activeFile: false },
+            { week: "Week 33", value: 1, days: 1, activeFile: false },
+            { week: "Week 34", value: 1, days: 1, activeFile: false },
+            { week: "Week 35", value: 1, days: 5, activeFile: false },
+            { week: "Week 36", value: 1, days: 1, activeFile: false },
+            { week: "Week 37", value: 1, days: 4, activeFile: false },
+            { week: "Week 38", value: 1, days: 3, activeFile: false },
+            { week: "Week 39", value: 1, days: 7, activeFile: false },
+            { week: "Week 40", value: 1, days: 2, activeFile: false },
+            { week: "Week 41", value: 1, days: 6, activeFile: false },
+            { week: "Week 42", value: 1, days: 5, activeFile: false },
+            { week: "Week 43", value: 1, days: 2, activeFile: false },
+            { week: "Week 44", value: 1, days: 4, activeFile: false },
+            { week: "Week 45", value: 1, days: 3, activeFile: false },
+            { week: "Week 46", value: 1, days: 7, activeFile: false },
+            { week: "Week 47", value: 1, days: 1, activeFile: false },
+            { week: "Week 48", value: 1, days: 3, activeFile: false },
+            { week: "Week 49", value: 1, days: 2, activeFile: false },
+            { week: "Week 50", value: 1, days: 1, activeFile: false },
+            { week: "Week 51", value: 1, days: 2, activeFile: true },
+            { week: "Week 52", value: 1, days: 0, activeFile: false }
+        ];
+            
+    const size = 150
+const width = size;
+const height = size;
+const margin = 20;
 
-        function getColor() {
-            return "#5A5A5A"
-        }
+// The radius of the donut chart
+const radius = Math.min(width, height) / 2 - margin;
 
-         // Chart.js plugin to draw a title inside the donut chart
-         const titlePlugin = {
-            beforeDraw: function(chart) {
-                const width = chart.chart.width;
-                const height = chart.chart.height;
-                const ctx = chart.chart.ctx;
+// Append the SVG object to the div with id "chart"
+const svg = d3.select("#chart")
+    .append("svg")
+    .attr("width", width)
+    .attr("height", height)
+    .append("g")
+    .attr("transform", `translate(${width / 2}, ${height / 2})`);
 
-                ctx.restore();
-                const fontSize = (height / 114).toFixed(2);
-                ctx.font = fontSize + "em sans-serif";
-                ctx.textBaseline = "middle";
-                const text = "My Donut Chart";
-                const textX = Math.round((width - ctx.measureText(text).width) / 2);
-                const textY = height / 2;
+// Set up the color scale
+const color = d3.scaleSequential()
+    .domain([ d3.max(data, d => d.days) + 1, 0])
+    .interpolator(d3.interpolateGreys);
 
-                ctx.fillText(text, textX, textY);
-                ctx.save();
-            },
-        };
+const colorActive = d3.scaleOrdinal()
+    .domain(["active", "inactive"])
+    .range(["#a13cc9", "#b0c4de"]);  // Red for active, light blue for inactive
 
-        // Create a donut chart using Chart.js
-        new Chart(ctx, {
-            type: 'doughnut',
-            data: {
-                datasets: [{
-                    data: donutChartData,
-                    backgroundColor: donutChartData.map(() => getColor()),
-                }],
-            },
-            options: {
-                cutout: '50%', // Adjust the cutout to control the size of the hole
-                responsive: false,
-                maintainAspectRatio: false,
-            },
-        });
+
+// Compute the position of each group on the pie
+const pie = d3.pie()
+    .value(d => d.value);
+
+const data_ready = pie(data);
+
+// Build the donut chart
+svg
+    .selectAll('arc')
+    .data(data_ready)
+    .join('path')
+    .attr('d', d3.arc()
+        .innerRadius(radius * 0.6)         // The size of the inner radius (to create a donut chart)
+        .outerRadius(radius))
+    .attr('fill', d => d.data.activeFile ? colorActive("active") : color(d.data.days))
+    .attr("stroke", "white")
+    .style("stroke-width", ".5px")
+    .style("opacity", 0.7);
+    
+    svg.append("text")
+    .attr("class", "title")
+    .attr("x", -20)
+            .attr("y", 5)
+            .style("font-size", `${size/8}px`)
+            .style("fill", "#fff")
+            .text("2024");
+
     </script>
 </body>
 </html>
