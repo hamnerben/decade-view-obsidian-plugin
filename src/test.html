@@ -22,7 +22,7 @@
 
 
         const data = [
-            { week: "Week 1", value: 1, days: 0, activeFile: false },
+            { week: "Week 1", value: 1, days: 0, activeFile: true },
             { week: "Week 2", value: 1, days: 0, activeFile: false },
             { week: "Week 3", value: 1, days: 1, activeFile: false },
             { week: "Week 4", value: 1, days: 3, activeFile: false },
@@ -76,7 +76,7 @@
             { week: "Week 52", value: 1, days: 0, activeFile: false }
         ];
             
-    const size = 150
+    const size = 200
 const width = size;
 const height = size;
 const margin = 20;
@@ -114,18 +114,18 @@ svg
     .data(data_ready)
     .join('path')
     .attr('d', d3.arc()
-        .innerRadius(radius * 0.6)         // The size of the inner radius (to create a donut chart)
+        .innerRadius(radius * 0.8)         // The size of the inner radius (to create a donut chart)
         .outerRadius(radius))
     .attr('fill', d => d.data.activeFile ? colorActive("active") : color(d.data.days))
     .attr("stroke", "white")
-    .style("stroke-width", ".5px")
+    .style("stroke-width", ".2px")
     .style("opacity", 0.7);
     
     svg.append("text")
     .attr("class", "title")
-    .attr("x", -20)
-            .attr("y", 5)
-            .style("font-size", `${size/8}px`)
+    .attr("x", -42)
+            .attr("y", 11)
+            .style("font-size", `${size/5}px`)
             .style("fill", "#fff")
             .text("2024");
 
