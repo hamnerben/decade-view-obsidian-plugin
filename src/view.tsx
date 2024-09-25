@@ -1,7 +1,9 @@
+import {StrictMode} from "react";
+import {createRoot, Root} from "react-dom/client";
 import * as exp from "constants";
 import { ItemView, TFile, WorkspaceLeaf, debounce } from "obsidian";
 import { getAllDailyNotes, getDateUID, getDateFromFile } from "obsidian-daily-notes-interface";
-
+import YearCircle from "./components/yearCircle";
 
 export const DECADE_VIEW = "decade-view";
 
@@ -40,27 +42,12 @@ export function createDailyNotesStore() {
 
 }
 
- function displayDecades(container: Element) {
-    const store = createDailyNotesStore();
-      
-    container.empty();
-    container.createEl("h4", { text: "Decdade View" });
 
-    store.forEach((notes, year) => {
-      container.createEl("h5", { text: `${year} (${notes.size})` });
-      const ul = container.createEl("ul");
-      notes.forEach((note, uid) => {
-        ul.createEl("li", { text: note.basename });
-      });
-    });
-
-}
 export class DecadeView extends ItemView {
-  private debouncedRender: () => void;
+  root: Root | null = null;
 
     constructor(leaf: WorkspaceLeaf) {
       super(leaf);
-      this.debouncedRender = debounce(() => this.renderView(), 1000, true);
     }
   
     getViewType() {
@@ -75,17 +62,18 @@ export class DecadeView extends ItemView {
 
     async onOpen() {
       console.log("opening");
-      this.renderView();
+      // this.renderView();
 
-      this.registerEvent(
-        this.app.vault.on("create", () => this.debouncedRender())
-      );
-      this.registerEvent(
-        this.app.vault.on("delete", () => this.debouncedRender())
-      );
-      this.registerEvent(
-        this.app.vault.on("rename", () => this.debouncedRender())
-      );
+      this.root = createRoot(this.containerEl.children[1]);
+      const store = createDailyNotesStore();
+    
+		  this.root.render(
+        <StrictMode>
+        <h4>Decade View</h4>
+          <YearCircle notes={store} year={year}/>
+  
+        </StrictMode>,
+		);
      
   
     }
@@ -94,13 +82,5 @@ export class DecadeView extends ItemView {
       // Nothing to clean up.
     }
 
-
-    private renderView() {
-      console.log("rendering");
-      const container = this.containerEl.children[1];
-      displayDecades(container);
-    }
-
-    
 
   }
