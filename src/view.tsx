@@ -75,8 +75,7 @@ export class DecadeView extends ItemView {
 		  this.root.render(
         <StrictMode>
         <h4>Decade View</h4>
-          <YearCircle year={years.get(1998)}/>
-  
+          {years.get(1998) && <YearCircle year="1998" notes={years.get(1998)!}/>}
         </StrictMode>,
 		);
      
