@@ -1,22 +1,19 @@
 import {TFile} from "obsidian";
 
-interface year {
+interface YearCirlceProps {
   year: Map<string, TFile>;
 }
 
-export default function YearCircle({ year }) {
+export default function YearCircle({ year }: YearCirlceProps) {
     return (
        
             <div>
               <h5>{year} ({year.size})</h5>
-            
-              container.createEl("h5", { text: `${year} (${notes.size})` });
-              const ul = container.createEl("ul");
-              notes.forEach((note, uid) => {
-                ul.createEl("li", { text: note.basename });
-              });
-            
-
+              <ul>
+                {year.forEach((TFile: note, string: uid) => (
+                  <li key={uid}>{note.basename}</li>
+                ))}
+              </ul>
         </div>
     )
 }
