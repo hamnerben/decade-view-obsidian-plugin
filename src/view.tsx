@@ -9,8 +9,17 @@ export const DECADE_VIEW = "decade-view";
 
 /**
  * 
- * @returns notes: {uid: Tfile}, 
- *          years: number[]  // all years that have daily notes
+ * @returns 
+ * Map<number, Map<string, TFile>>
+ * Map<year, Map<uid, TFile>>
+ * 
+ * example=======================
+ * years: {
+ *    year: {
+ *        uid: TFile,
+ *        uid: TFile,
+ *    },
+ * };     
  */
 export function createDailyNotesStore() {
   const notes = getAllDailyNotes(); // uid: Tfile
@@ -23,23 +32,19 @@ export function createDailyNotesStore() {
       if (date) {
         const year = date.year();
           if (!years.has(year)) {
-              years.set(year, new Map());
+              years.set(year, new Map());  // create new map for year
           }
-          years.get(year)?.set(uid, file);
+          years.get(year)?.set(uid, file);  // add note to year
       }
   });
-  const sortedYears = new Map([...years.entries()].sort((a, b) => a[0] - b[0]));
-
-  
+  const sortedYears = new Map([...years.entries()].sort((a, b) => a[0] - b[0])); // sort the years
 
   sortedYears.forEach((notes, year) => {
-
-    const sortedNotes:Map<string, TFile>  = new Map([...notes.entries()].sort());
-    sortedYears.set(year, sortedNotes);
+    const sortedNotes:Map<string, TFile>  = new Map([...notes.entries()].sort()); // sort the notes
+    sortedYears.set(year, sortedNotes); 
   });
 
   return sortedYears;
-
 }
 
 
@@ -65,12 +70,12 @@ export class DecadeView extends ItemView {
       // this.renderView();
 
       this.root = createRoot(this.containerEl.children[1]);
-      const store = createDailyNotesStore();
+      const years = createDailyNotesStore();
     
 		  this.root.render(
         <StrictMode>
         <h4>Decade View</h4>
-          <YearCircle notes={store} year={year}/>
+          <YearCircle year={years.get(1998)}/>
   
         </StrictMode>,
 		);
