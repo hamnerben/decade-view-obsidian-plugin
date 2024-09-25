@@ -5,3 +5,5 @@
 2. There was a long feedback loop in experimenting with the API. I found that I could open the console within the obsidian developer console to test out API features.
 
 3. I keep running into problems and I keep backing up and backing up until I realize I'm not doing `npm run`.  Dangit
+
+4. I learned a lot from my React dev class and now I realize some changes I should implment so I refactored it. 

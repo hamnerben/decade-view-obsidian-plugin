@@ -2,7 +2,6 @@ import { Plugin, WorkspaceLeaf } from "obsidian";
 import { getAllDailyNotes, getDateUID } from "obsidian-daily-notes-interface";
 
 import { DecadeView, DECADE_VIEW, createDailyNotesStore } from "./view";
-import { ExampleView, VIEW_TYPE_EXAMPLE } from "./reactView1"
 
 
 export default class DailyNotePlugin extends Plugin {

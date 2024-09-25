@@ -8,12 +8,11 @@ import YearCircle from "./components/yearCircle";
 export const DECADE_VIEW = "decade-view";
 
 /**
- * 
  * @returns 
  * Map<number, Map<string, TFile>>
  * Map<year, Map<uid, TFile>>
  * 
- * example=======================
+ * --example--
  * years: {
  *    year: {
  *        uid: TFile,
@@ -22,13 +21,11 @@ export const DECADE_VIEW = "decade-view";
  * };     
  */
 export function createDailyNotesStore() {
+
   const notes = getAllDailyNotes(); // uid: Tfile
   let years = new Map<number, Map<string, TFile>>();
-  
   Object.entries(notes).forEach(([uid, file]) => {
-  
       const date = getDateFromFile(file, "day");
-  
       if (date) {
         const year = date.year();
           if (!years.has(year)) {
@@ -38,12 +35,10 @@ export function createDailyNotesStore() {
       }
   });
   const sortedYears = new Map([...years.entries()].sort((a, b) => a[0] - b[0])); // sort the years
-
   sortedYears.forEach((notes, year) => {
     const sortedNotes:Map<string, TFile>  = new Map([...notes.entries()].sort()); // sort the notes
     sortedYears.set(year, sortedNotes); 
   });
-
   return sortedYears;
 }
 
@@ -63,11 +58,8 @@ export class DecadeView extends ItemView {
       return "Decade-View";
     }
   
-
-
     async onOpen() {
       console.log("opening");
-      // this.renderView();
 
       this.root = createRoot(this.containerEl.children[1]);
       const years = createDailyNotesStore();
@@ -77,10 +69,10 @@ export class DecadeView extends ItemView {
       ));
 
 		  this.root.render(
-        <StrictMode>,
-        <h4>Decade View</h4>,
+        <StrictMode>
+        <h4>Decade View</h4>
         {yearCircles}
-        </StrictMode>,
+        </StrictMode>
 		);
      
   
