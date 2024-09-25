@@ -72,10 +72,14 @@ export class DecadeView extends ItemView {
       this.root = createRoot(this.containerEl.children[1]);
       const years = createDailyNotesStore();
     
+      const yearCircles = [...years.entries()].map(([year, notes]) => (
+        <YearCircle key={year} year={year} notes={notes} /> // Make sure to pass the notes as the correct prop
+      ));
+
 		  this.root.render(
-        <StrictMode>
-        <h4>Decade View</h4>
-          {years.get(1998) && <YearCircle year="1998" notes={years.get(1998)!}/>}
+        <StrictMode>,
+        <h4>Decade View</h4>,
+        {yearCircles}
         </StrictMode>,
 		);
      

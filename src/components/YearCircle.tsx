@@ -2,7 +2,7 @@ import { TFile } from "obsidian";
 
 interface YearCircleProps {
   notes: Map<string, TFile>;
-  year: string
+  year: number
 }
 
 export default function YearCircle({ notes, year }: YearCircleProps) {
