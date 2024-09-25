@@ -32,7 +32,6 @@ export function createDailyNotesStore() {
 
   sortedYears.forEach((notes, year) => {
 
-
     const sortedNotes:Map<string, TFile>  = new Map([...notes.entries()].sort());
     sortedYears.set(year, sortedNotes);
   });
