@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import * as d3 from "d3";
 
-export default function Donut() {
+export default function Donut({ year }: { year: number }) {
 	interface dataPoint {
 		week: string;
 		value: number;
@@ -64,16 +64,19 @@ export default function Donut() {
 		{ week: "Week 52", value: 1, days: 0, activeFile: false },
 	];
 
-    const svgRef = useRef<SVGSVGElement | null>(null);
+	const svgRef = useRef<HTMLDivElement | null>(null);
 
 	useEffect(() => {
-		const size = 200;
+		const size = 140;
 		const width = size;
 		const height = size;
-		const margin = 20;
+		const margin = 10;
 
 		// The radius of the donut chart
 		const radius = Math.min(width, height) / 2 - margin;
+
+		// Clean up previous SVG content before re-rendering
+		d3.select(svgRef.current).selectAll("*").remove();
 
 		// Append the SVG object to the div with id "chart"
 		const svg = d3
@@ -122,6 +125,9 @@ export default function Donut() {
 			.attr("y", 11)
 			.style("font-size", `${size / 5}px`)
 			.style("fill", "#fff")
-			.text("2024");
-	}, [data]);
+			.text(`${year}`);
+
+	}, [data, year]);
+
+	return <div ref={svgRef}></div>;
 }

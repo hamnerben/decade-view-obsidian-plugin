@@ -4,6 +4,7 @@ import * as exp from "constants";
 import { ItemView, TFile, WorkspaceLeaf, debounce } from "obsidian";
 import { getAllDailyNotes, getDateUID, getDateFromFile } from "obsidian-daily-notes-interface";
 import YearCircle from "./components/YearCircle";
+import Donut from "./components/Donut";
 
 export const DECADE_VIEW = "decade-view";
 
@@ -64,14 +65,16 @@ export class DecadeView extends ItemView {
       this.root = createRoot(this.containerEl.children[1]);
       const years = createDailyNotesStore();
     
-      const yearCircles = [...years.entries()].map(([year, notes]) => (
-        <YearCircle key={year} year={year} notes={notes} /> // Make sure to pass the notes as the correct prop
-      ));
+      // const yearCircles = [...years.entries()].map(([year, notes]) => (
+      //   <YearCircle key={year} year={year} notes={notes} /> // Make sure to pass the notes as the correct prop
+      // ));
 
 		  this.root.render(
         <StrictMode>
         <h4>Decade View</h4>
-        {yearCircles}
+        <Donut year={1998} />
+        <Donut year={2004}/>
+        <Donut year={2024}/>
         </StrictMode>
 		);
      
