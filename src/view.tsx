@@ -82,7 +82,10 @@ export class DecadeView extends ItemView {
     }
   
     async onClose() {
-      // Nothing to clean up.
+      if (this.root) {
+        this.root.unmount();  // Unmount React components
+        this.root = null;     // Clean up the root reference
+      }
     }
 
 

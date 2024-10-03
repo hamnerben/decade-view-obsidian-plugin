@@ -121,8 +121,8 @@ export default function Donut({ year }: { year: number }) {
 
 		svg.append("text")
 			.attr("class", "title")
-			.attr("x", -42)
-			.attr("y", 11)
+			.attr("x", -31)
+			.attr("y", 9)
 			.style("font-size", `${size / 5}px`)
 			.style("fill", "#fff")
 			.text(`${year}`);
