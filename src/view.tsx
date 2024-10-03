@@ -72,9 +72,14 @@ export class DecadeView extends ItemView {
 		  this.root.render(
         <StrictMode>
         <h4>Decade View</h4>
+        <div className="flex">
         <Donut year={1998} />
         <Donut year={2004}/>
+        <Donut year={2013}/>
+        <Donut year={2015} />
+        <Donut year={2019}/>
         <Donut year={2024}/>
+        </div>
         </StrictMode>
 		);
      

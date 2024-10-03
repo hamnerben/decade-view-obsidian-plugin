@@ -67,7 +67,7 @@ export default function Donut({ year }: { year: number }) {
 	const svgRef = useRef<HTMLDivElement | null>(null);
 
 	useEffect(() => {
-		const size = 140;
+		const size = 100;
 		const width = size;
 		const height = size;
 		const margin = 10;
@@ -121,8 +121,8 @@ export default function Donut({ year }: { year: number }) {
 
 		svg.append("text")
 			.attr("class", "title")
-			.attr("x", -31)
-			.attr("y", 9)
+			.attr("x", `${size / -4.7}`)
+			.attr("y", `${size / 15}`)
 			.style("font-size", `${size / 5}px`)
 			.style("fill", "#fff")
 			.text(`${year}`);
