@@ -22,7 +22,6 @@ export default class DailyNotePlugin extends Plugin {
       // console.log("store: ", store);
       const yearData = store.get(2024)!
       // console.log("year: \n", yearData)
-      const sanitizedYear = getYearData(2024, yearData);
       // console.log("sanitizedYear: \n", sanitizedYear);
     });
   }
@@ -43,10 +42,10 @@ export default class DailyNotePlugin extends Plugin {
       // Our view could not be found in the workspace, create a new leaf
       // in the right sidebar for it
       leaf = workspace.getRightLeaf(false);
-      await leaf.setViewState({ type: DECADE_VIEW, active: true });
+      await leaf!.setViewState({ type: DECADE_VIEW, active: true });
     }
 
     // "Reveal" the leaf in case it is in a collapsed sidebar
-    workspace.revealLeaf(leaf);
+    workspace.revealLeaf(leaf!);
   }
 }

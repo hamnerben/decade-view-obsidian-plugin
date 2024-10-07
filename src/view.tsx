@@ -53,11 +53,53 @@ export function createDailyNotesStore() {
   return sortedYears;
 }
 
-export function getYearData(year: number, notes: Map<string, TFile>) {
-  const yearData: { uid: TFile }[] = [];
-  notes.forEach((note, uid) => {
-    yearData.push({uid: note});
+export function getYearData(year: number, notes: Map<string, TFile>, activeFile: TFile | null) {
+
+  type NoteData = {
+    uid: string;    // The unique identifier of the file
+    file: TFile;    // The file object
+    activeFile: boolean; // Whether the file is the active file
+  };
+
+  type WeeksData = {
+    [key: number]: NoteData[]; // Mapping from week label to an array of TFile objects
+  };
+
+  const weeks: WeeksData = {};
+  notes.forEach((file, uid) => {
+    const weekNumber = getDateFromFile(file, "day")?.week();
+
+    if (weekNumber === undefined) {
+      return;
+    }
+
+    // Check if the week already exists in the weeks object
+    if (!weeks[weekNumber]) {
+      weeks[weekNumber] = [];
+    }
+
+    // Create an object containing both uid and file
+    const noteData: NoteData = { uid, file, activeFile: activeFile === file };
+
+    // Push the noteData into the corresponding week's array
+    weeks[weekNumber].push(noteData);
   });
+
+  interface YearDataEntry {
+    week: number;
+    notes: NoteData[];
+    activeNote: boolean;
+    value: 1; // Ensures that value is always 1
+  }
+  
+  type YearData = YearDataEntry[]; // An array of YearDataEntry
+
+  const yearData: YearDataEntry[] = [];
+  for (let i = 1; i <= 52; i++) {
+    const notes = weeks[i] || []; // Get notes for the week or an empty array if none exist
+    const activeNoteExists = notes.some(note => note.activeFile); // Check if any note is active
+    yearData.push({ "week": i, "notes": notes, activeNote: activeNoteExists, value: 1 });
+  }
   return yearData;
 }
 
@@ -91,15 +133,15 @@ export class DecadeView extends ItemView {
     }
 
     onActiveFileChange = debounce(() => {
-      console.log("active file changed");
+      // console.log("active file changed");
       this.renderView();
     }, 300);
 
-    
+
 renderView() {
   const years = createDailyNotesStore();
-  const yearData = getYearData(2024, years.get(2024)!);
-  console.log("rendering view");
+  const activeFile = this.app.workspace.getActiveFile();
+  const yearData = getYearData(2024, years.get(2024)!, activeFile);
   this.root?.render(
     <StrictMode>
     <h4 >Decade View</h4>
