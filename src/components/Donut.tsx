@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import * as d3 from "d3";
 
-export default function Donut({ year }: { year: number }) {
+export default function Donut({ year, data }: { year: number, data: any }) {
 	interface dataPoint {
 		week: string;
 		value: number;
@@ -9,7 +9,7 @@ export default function Donut({ year }: { year: number }) {
 		activeFile: boolean;
 	}
 
-	const data: dataPoint[] = [
+	const datap: dataPoint[] = [
 		{ week: "Week 1", value: 1, days: 0, activeFile: false },
 		{ week: "Week 2", value: 1, days: 0, activeFile: false },
 		{ week: "Week 3", value: 1, days: 1, activeFile: false },
@@ -67,6 +67,7 @@ export default function Donut({ year }: { year: number }) {
 	const svgRef = useRef<HTMLDivElement | null>(null);
 
 	useEffect(() => {
+		console.log(data);
 		const size = 100;
 		const width = size;
 		const height = size;
@@ -90,7 +91,7 @@ export default function Donut({ year }: { year: number }) {
 		// Set up the color scale
 		const color = d3
 			.scaleSequential()
-			.domain([(d3.max(data, (d) => d.days) ?? 0) + 1, 0])
+			.domain([(d3.max(datap, (d) => d.days) ?? 0) + 1, 0])
 			.interpolator(d3.interpolateGreys);
 
 		const colorActive = d3
@@ -101,7 +102,7 @@ export default function Donut({ year }: { year: number }) {
 		// Compute the position of each group on the pie
 		const pie = d3.pie<dataPoint>().value((d) => d.value);
 
-		const data_ready = pie(data);
+		const data_ready = pie(datap);
 
 		// Create the arc generator
 		const arcGenerator = d3
@@ -114,7 +115,7 @@ export default function Donut({ year }: { year: number }) {
 			.data(data_ready)
 			.join("path")
 			.attr("d", arcGenerator)
-			.attr("fill", "blue") // d => d.data.activeFile ? colorActive("active") : color(d.data.days))
+			.attr("fill", "blue") // d => d.datap.activeFile ? colorActive("active") : color(d.datap.days))
 			.attr("stroke", "white")
 			.style("stroke-width", ".2px")
 			.style("opacity", 0.7);
@@ -127,7 +128,7 @@ export default function Donut({ year }: { year: number }) {
 			.style("fill", "#fff")
 			.text(`${year}`);
 
-	}, [data, year]);
+	}, [datap, year]);
 
 	return <div ref={svgRef}></div>;
 }

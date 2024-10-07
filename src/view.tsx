@@ -8,19 +8,29 @@ import Donut from "./components/Donut";
 
 export const DECADE_VIEW = "decade-view";
 
-/**
- * @returns 
- * Map<number, Map<string, TFile>>
- * Map<year, Map<uid, TFile>>
+/** 
+ * @returns {Map<number, Map<string, TFile>>} A map where the keys are years and the values are another map.
  * 
- * --example--
- * years: {
- *    year: {
- *        uid: TFile,
- *        uid: TFile,
+ * @description
+ * This function returns a nested map where:
+ * - The outer map has keys as years (number).
+ * - The inner map has keys as unique IDs (string) and values as `TFile` objects.
+ * 
+ * --Example--
+ * {
+ *    2023: {
+ *        "uid1": TFile,
+ *        "uid2": TFile,
  *    },
- * };     
+ *    2024: {
+ *        "uid3": TFile,
+ *        "uid4": TFile,
+ *    },
+ * }
+ * 
+ * @typedef {Object} TFile
  */
+
 export function createDailyNotesStore() {
 
   const notes = getAllDailyNotes(); // uid: Tfile
@@ -43,6 +53,13 @@ export function createDailyNotesStore() {
   return sortedYears;
 }
 
+export function getYearData(year: number, notes: Map<string, TFile>) {
+  const yearData: { uid: TFile }[] = [];
+  notes.forEach((note, uid) => {
+    yearData.push({uid: note});
+  });
+  return yearData;
+}
 
 export class DecadeView extends ItemView {
   root: Root | null = null;
@@ -62,28 +79,41 @@ export class DecadeView extends ItemView {
     async onOpen() {
       console.log("opening");
 
+      this.registerEvent(this.app.workspace.on("active-leaf-change", this.onActiveFileChange.bind(this)));
+
       this.root = createRoot(this.containerEl.children[1]);
-      const years = createDailyNotesStore();
     
       // const yearCircles = [...years.entries()].map(([year, notes]) => (
       //   <YearCircle key={year} year={year} notes={notes} /> // Make sure to pass the notes as the correct prop
       // ));
+      this.renderView();
 
-		  this.root.render(
-        <StrictMode>
-        <h4 className="text-amber-800">Decade View</h4>
-        <div className="flex">
-        <Donut year={1998} />
-        <Donut year={2004}/>
-        <Donut year={2013}/>
-        <Donut year={2015} />
-        <Donut year={2019}/>
-        <Donut year={2024}/>
-        </div>
-        </StrictMode>
-		);
-     
-  
+    }
+
+    onActiveFileChange = debounce(() => {
+      console.log("active file changed");
+      this.renderView();
+    }, 300);
+
+    
+renderView() {
+  const years = createDailyNotesStore();
+  const yearData = getYearData(2024, years.get(2024)!);
+  console.log("rendering view");
+  this.root?.render(
+    <StrictMode>
+    <h4 >Decade View</h4>
+    <div >
+    {/* <Donut year={1998} data={yearData}/>
+    <Donut year={2004} data={yearData}/>
+    <Donut year={2013} data={yearData}/>
+    <Donut year={2015} data={yearData}/>
+    <Donut year={2019} data={yearData}/> */}
+    <Donut year={2024} data={yearData}/>
+    </div>
+    </StrictMode>
+);
+   
     }
   
     async onClose() {
