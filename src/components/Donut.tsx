@@ -19,10 +19,11 @@ export default function Donut({ year, data }: { year: number, data: any }) {
 	const svgRef = useRef<HTMLDivElement | null>(null);
 
 	useEffect(() => {
-		const size = 200;
+		const size = 120;
 		const width = size;
 		const height = size;
 		const margin = 10;
+		let isActive = false;
 
 		// The radius of the donut chart
 		const radius = Math.min(width, height) / 2 - margin;
@@ -66,6 +67,7 @@ export default function Donut({ year, data }: { year: number, data: any }) {
 				if (weekNotes.length === 0) {
 				  return colorScale("empty") as string; // Grey for empty weeks
 				} else if (weekNotes.some(note => note.activeFile)) {
+					isActive = true;
 				  return colorScale("active") as string; // Color for active note
 				} else {
 				  return colorScale("inactive") as string; // Color for inactive notes
@@ -80,7 +82,7 @@ export default function Donut({ year, data }: { year: number, data: any }) {
 			.attr("x", `${size / -4.7}`)
 			.attr("y", `${size / 15}`)
 			.style("font-size", `${size / 5}px`)
-			.style("fill", "#fff")
+			.style("fill", isActive ? colorScale("active") as string : "#fff")
 			.text(`${year}`);
 
 	}, [data, year]);

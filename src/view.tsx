@@ -139,17 +139,16 @@ export class DecadeView extends ItemView {
 renderView() {
   const years = createDailyNotesStore();
   const activeFile = this.app.workspace.getActiveFile();
-  const yearData = getYearData(2024, years.get(2024)!, activeFile);
+  const donuts = [...years.entries()].map(([year, notes]) => {
+    const yearData = getYearData(year, notes, activeFile);
+    return <Donut year={year} data={yearData} />;
+  });
+
   this.root?.render(
     <StrictMode>
     <h4 >Decade View</h4>
     <div >
-    {/* <Donut year={1998} data={yearData}/>
-    <Donut year={2004} data={yearData}/>
-    <Donut year={2013} data={yearData}/>
-    <Donut year={2015} data={yearData}/>
-    <Donut year={2019} data={yearData}/> */}
-    <Donut year={2024} data={yearData}/>
+    {donuts}
     </div>
     </StrictMode>
 );
