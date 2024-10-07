@@ -88,7 +88,6 @@ export function getYearData(year: number, notes: Map<string, TFile>, activeFile:
   interface YearDataEntry {
     week: number;
     notes: NoteData[];
-    activeNote: boolean;
     value: 1; // Ensures that value is always 1
   }
   
@@ -97,8 +96,7 @@ export function getYearData(year: number, notes: Map<string, TFile>, activeFile:
   const yearData: YearDataEntry[] = [];
   for (let i = 1; i <= 52; i++) {
     const notes = weeks[i] || []; // Get notes for the week or an empty array if none exist
-    const activeNoteExists = notes.some(note => note.activeFile); // Check if any note is active
-    yearData.push({ "week": i, "notes": notes, activeNote: activeNoteExists, value: 1 });
+    yearData.push({ "week": i, "notes": notes, value: 1 });
   }
   return yearData;
 }

@@ -19,7 +19,6 @@ export default function Donut({ year, data }: { year: number, data: any }) {
 	const svgRef = useRef<HTMLDivElement | null>(null);
 
 	useEffect(() => {
-		console.log("data: ", data);
 		const size = 200;
 		const width = size;
 		const height = size;
@@ -41,10 +40,10 @@ export default function Donut({ year, data }: { year: number, data: any }) {
 			.attr("transform", `translate(${width / 2}, ${height / 2})`);
 
 
-		const colorActive = d3
+		const colorScale = d3
 			.scaleOrdinal()
-			.domain(["active", "inactive"])
-			.range(["#a13cc9", "#b0c4de"]); 
+			.domain(["active", "inactive", "empty"])
+      		.range(["#a13cc9", "#b0c4de", "#808080"]);
 
 		// Compute the position of each group on the pie
 		const pie = d3.pie<dataPoint>().value((d) => d.value);
@@ -62,7 +61,16 @@ export default function Donut({ year, data }: { year: number, data: any }) {
 			.data(data_ready)
 			.join("path")
 			.attr("d", arcGenerator)
-			.attr("fill", d => (d.data.activeNote ? colorActive("active") : colorActive("inactive")) as string)
+			.attr("fill", (d) => {
+				const weekNotes = d.data.notes;
+				if (weekNotes.length === 0) {
+				  return colorScale("empty") as string; // Grey for empty weeks
+				} else if (weekNotes.some(note => note.activeFile)) {
+				  return colorScale("active") as string; // Color for active note
+				} else {
+				  return colorScale("inactive") as string; // Color for inactive notes
+				}
+			  }) 
 			.attr("stroke", "white")
 			.style("stroke-width", ".2px")
 			.style("opacity", 0.7);
