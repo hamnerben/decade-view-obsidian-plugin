@@ -11,7 +11,7 @@
 - [X] 1 pt - **draw a donut in d3**
 - [X] 2 pt - **Refactor to React**
 - [X] 1 pt - **display donut in obsidian**
-- [ ] 1 pt - **hook up donut with data**
+- [X] 2 pt - **hook up donut with data**
 - [ ] 1 pt - **hook up colors** 
 - [ ] 1 pt - **next journal entry and previous journal entry button**
 

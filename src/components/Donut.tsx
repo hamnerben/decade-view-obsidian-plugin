@@ -3,6 +3,12 @@ import { TFile } from "obsidian";
 import * as d3 from "d3";
 
 export default function Donut({ year, data }: { year: number, data: any }) {
+	const textColor = "var(--color-base-100)"
+	const activeCellColor = "var(--text-accent)";
+	const inactiveCellColor = "var(--color-base-60)";
+	const emptyCellColor = "var(--background-secondary)";
+	const strokeColor = "var(--color-base-100)";
+
 	type NoteData = {
 		uid: string;    // The unique identifier of the file
 		file: TFile;    // The file object
@@ -19,7 +25,7 @@ export default function Donut({ year, data }: { year: number, data: any }) {
 	const svgRef = useRef<HTMLDivElement | null>(null);
 
 	useEffect(() => {
-		const size = 120;
+		const size = 120;  // 120
 		const width = size;
 		const height = size;
 		const margin = 10;
@@ -44,7 +50,7 @@ export default function Donut({ year, data }: { year: number, data: any }) {
 		const colorScale = d3
 			.scaleOrdinal()
 			.domain(["active", "inactive", "empty"])
-      		.range(["#a13cc9", "#b0c4de", "#808080"]);
+      		.range([activeCellColor, inactiveCellColor, emptyCellColor]);
 
 		// Compute the position of each group on the pie
 		const pie = d3.pie<dataPoint>().value((d) => d.value);
@@ -73,7 +79,7 @@ export default function Donut({ year, data }: { year: number, data: any }) {
 				  return colorScale("inactive") as string; // Color for inactive notes
 				}
 			  }) 
-			.attr("stroke", "white")
+			.attr("stroke", strokeColor)
 			.style("stroke-width", ".2px")
 			.style("opacity", 0.7);
 
@@ -82,7 +88,7 @@ export default function Donut({ year, data }: { year: number, data: any }) {
 			.attr("x", `${size / -4.7}`)
 			.attr("y", `${size / 15}`)
 			.style("font-size", `${size / 5}px`)
-			.style("fill", isActive ? colorScale("active") as string : "#fff")
+			.style("fill", isActive ? colorScale("active") as string : textColor)
 			.text(`${year}`);
 
 	}, [data, year]);
