@@ -3,7 +3,6 @@ import {createRoot, Root} from "react-dom/client";
 import * as exp from "constants";
 import { ItemView, TFile, WorkspaceLeaf, debounce } from "obsidian";
 import { getAllDailyNotes, getDateUID, getDateFromFile } from "obsidian-daily-notes-interface";
-import YearCircle from "./components/YearCircle";
 import Donut from "./components/Donut";
 
 export const DECADE_VIEW = "decade-view";
@@ -123,9 +122,6 @@ export class DecadeView extends ItemView {
 
       this.root = createRoot(this.containerEl.children[1]);
     
-      // const yearCircles = [...years.entries()].map(([year, notes]) => (
-      //   <YearCircle key={year} year={year} notes={notes} /> // Make sure to pass the notes as the correct prop
-      // ));
       this.renderView();
 
     }
@@ -141,7 +137,7 @@ renderView() {
   const activeFile = this.app.workspace.getActiveFile();
   const donuts = [...years.entries()].map(([year, notes]) => {
     const yearData = getYearData(year, notes, activeFile);
-    return <Donut year={year} data={yearData} />;
+    return <Donut key={year} year={year} data={yearData} />;
   });
 
   this.root?.render(

@@ -12,7 +12,9 @@
 - [X] 2 pt - **Refactor to React**
 - [X] 1 pt - **display donut in obsidian**
 - [X] 2 pt - **hook up donut with data**
-- [ ] 1 pt - **hook up colors** 
+- [X] 1 pt - **hook up colors** 
+- [ ] 1 pt - **in focus view pops to active year**
+- [ ] 1 pt - **command to open decade view AND change icon** 
 - [ ] 1 pt - **next journal entry and previous journal entry button**
 
 
