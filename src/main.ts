@@ -1,7 +1,7 @@
 import { Plugin, WorkspaceLeaf } from "obsidian";
 import { getAllDailyNotes, getDateUID } from "obsidian-daily-notes-interface";
 
-import { DecadeView, DECADE_VIEW, createDailyNotesStore, getYearData } from "./view";  // todo: remove createDailyNotesStore from here
+import { DecadeView, DECADE_VIEW } from "./view";  // todo: remove createDailyNotesStore from here
 
 
 export default class DailyNotePlugin extends Plugin {
@@ -11,19 +11,11 @@ export default class DailyNotePlugin extends Plugin {
       (leaf) => new DecadeView(leaf)
     );
 
-    // this.addRibbonIcon("calendar", "Activate THE view", () => {
-    //   // this.activateView();
-    //   console.log("activateView");
-    // });
-
-
-    this.addRibbonIcon("dice", "get Notes and Sanitized year", () => {
-      const store = createDailyNotesStore();
-      // console.log("store: ", store);
-      const yearData = store.get(2024)!
-      // console.log("year: \n", yearData)
-      // console.log("sanitizedYear: \n", sanitizedYear);
+    this.addRibbonIcon("calendar", "Activate THE view", () => {
+      // this.activateView();
+      console.log("activateView");
     });
+
   }
 
   async onunload() {
