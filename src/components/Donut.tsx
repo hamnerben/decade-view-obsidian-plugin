@@ -5,7 +5,7 @@ import * as d3 from "d3";
 export default function Donut({ year, data }: { year: number, data: any }) {
 	const textColor = "var(--color-base-100)"
 	const activeCellColor = "var(--text-accent)";
-	const inactiveCellColor = "var(--color-base-60)";
+	const inactiveCellColor = "var(--color-base-50)";
 	const emptyCellColor = "var(--background-secondary)";
 	const strokeColor = "var(--color-base-100)";
 
@@ -85,9 +85,10 @@ export default function Donut({ year, data }: { year: number, data: any }) {
 
 		svg.append("text")
 			.attr("class", "title")
-			.attr("x", `${size / -4.7}`)
+			.attr("x", `${size / -5.0}`)
 			.attr("y", `${size / 15}`)
-			.style("font-size", `${size / 5}px`)
+			.style("font-size", `${size / 5.5}px`)
+			// .style("font", "var(--font-ui-larger)")
 			.style("fill", isActive ? colorScale("active") as string : textColor)
 			.text(`${year}`);
 
