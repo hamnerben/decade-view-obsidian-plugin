@@ -7,5 +7,6 @@
 	"author": "Ben Hamner",
 	"authorUrl": "https://obsidian.md",
 	"fundingUrl": "https://obsidian.md/pricing",
-	"isDesktopOnly": true
+	"isDesktopOnly": true,
+	"icon": "calendar-clock"
 }

@@ -1,4 +1,4 @@
-import { Plugin, WorkspaceLeaf } from "obsidian";
+import { Plugin, WorkspaceLeaf, setIcon } from "obsidian";
 import { getAllDailyNotes, getDateUID } from "obsidian-daily-notes-interface";
 
 import { DecadeView, DECADE_VIEW } from "./view";  // todo: remove createDailyNotesStore from here
@@ -6,13 +6,17 @@ import { DecadeView, DECADE_VIEW } from "./view";  // todo: remove createDailyNo
 
 export default class DailyNotePlugin extends Plugin {
   async onload() {
+    
     this.registerView(
       DECADE_VIEW,
       (leaf) => new DecadeView(leaf)
+           
     );
 
-    this.addRibbonIcon("calendar", "Activate THE view", () => {
-      // this.activateView();
+   
+
+    this.addRibbonIcon("calendar-clock", "Decade View", () => {
+      this.activateView();
       console.log("activateView");
     });
 
@@ -39,5 +43,6 @@ export default class DailyNotePlugin extends Plugin {
 
     // "Reveal" the leaf in case it is in a collapsed sidebar
     workspace.revealLeaf(leaf!);
+    
   }
 }

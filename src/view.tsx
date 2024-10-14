@@ -13,6 +13,7 @@ export class DecadeView extends ItemView {
 
     constructor(leaf: WorkspaceLeaf) {
       super(leaf);
+      icon: "calendar-clock";
     }
   
     getViewType() {
@@ -21,6 +22,10 @@ export class DecadeView extends ItemView {
   
     getDisplayText() {
       return "Decade-View";
+    }
+    
+    getIcon(): string {
+      return "calendar-clock";
     }
   
     async onOpen() {
