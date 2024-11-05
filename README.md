@@ -38,7 +38,7 @@ Customizable: Easily adapt the color scheme and yearly structure in the settings
 
 ## Example
 
-![Desktop Example View](src\images\example.png)
+![Desktop Example View](https://github.com/hamnerben/decade-view-obsidian-plugin/blob/master/src/images/example.png)
 
 ## Contributing
 
