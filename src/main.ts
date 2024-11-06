@@ -13,7 +13,10 @@ export default class DailyNotePlugin extends Plugin {
            
     );
 
-   
+    this.addRibbonIcon("calendar", "next note", () => {
+      this.app?.commands.executeCommandById("daily-notes:goto-next")
+      console.log(this.app);
+    });
 
     this.addRibbonIcon("calendar-clock", "Decade View", () => {
       this.activateView();

@@ -16,7 +16,12 @@ export default function Header() {
             margin: 0,
             backgroundColor: background, 
             padding: '1em',  }}>
-            <button onClick={() => app?.commands.executeCommandById('daily-notes:goto-next')}
+            <button onClick={() => {
+                const commandtoExecute =  () => {app?.commands.executeCommandById('daily-notes:goto-next')}
+                commandtoExecute();
+                console.log(commandtoExecute());
+                
+            }}
             >Next Note</button>
         </header>
         </div>
