@@ -1,5 +1,7 @@
+import { useApp } from '../contexts/AppContext';
 
 export default function Header() {
+    const app = useApp();
 
     const background = "var(--color-base-30)";
 
@@ -14,8 +16,8 @@ export default function Header() {
             margin: 0,
             backgroundColor: background, 
             padding: '1em',  }}>
-            <h1 style={{
-            }}>Decade View</h1>
+            <button onClick={() => app?.commands.executeCommandById('daily-notes:goto-next')}
+            >Next Note</button>
         </header>
         </div>
     )
