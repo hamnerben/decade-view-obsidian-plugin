@@ -3,6 +3,7 @@ import {createRoot, Root} from "react-dom/client";
 import { ItemView, WorkspaceLeaf, debounce } from "obsidian";
 import Donut from "./components/Donut";
 import {createDailyNotesStore, getYearData} from "./yearData"
+import Header from "./components/Header";
 
 export const DECADE_VIEW = "decade-view";
 
@@ -55,8 +56,8 @@ renderView() {
 
   this.root?.render(
     <StrictMode>
-    <h4 >Decade View</h4>
-    <div >
+    <Header />
+      <div style={{paddingTop:'100px'}}>
     {donuts}
     </div>
     </StrictMode>

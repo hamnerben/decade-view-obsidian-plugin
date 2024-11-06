@@ -1,3 +1,11 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  color: red !important;
+}
+
 *, ::before, ::after {
   --tw-border-spacing-x: 0;
   --tw-border-spacing-y: 0;
@@ -566,3 +574,15 @@ video {
   --tw-text-opacity: 1;
   color: rgb(0 0 0 / var(--tw-text-opacity));
 }
+
+.fixed-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;         /* Ensures the header spans the full width */
+  z-index: 1000;        /* Keeps it above other elements */
+  background-color: #fff; /* Optional: give it a background color */
+  padding: 15px;        /* Optional: add some padding */
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Optional: add shadow for separation */
+}
+
