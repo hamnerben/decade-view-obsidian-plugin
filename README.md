@@ -20,7 +20,7 @@ Clone the repository to your Obsidian plugins folder.
 
 **bash**
 
-`git clone <repository-url> .obsidian/plugins/obsidian-decade-view`
+`git clone https://github.com/hamnerben/decade-view-obsidian-plugin.git <vault_path>/.obsidian/plugins/obsidian-decade-view`
 
 In Obsidian, navigate to Settings > Community Plugins and enable the Decade View plugin.
 
