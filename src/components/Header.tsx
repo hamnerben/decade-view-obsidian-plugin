@@ -8,7 +8,6 @@ export default function Header() {
     return (
         <div style={{
             position: 'fixed',
-            width: '100%',
         }}>
             <header style={{
                 top: 0,
@@ -17,14 +16,32 @@ export default function Header() {
                 backgroundColor: background,
                 padding: '1em',
             }}>
+                <button 
+                style={{ marginRight: '1em' }}
+                onClick={() => {
+                    window.focus();
+                    const leaf = app.workspace.getLeavesOfType('markdown')?.[0];
+                    if (leaf) {
+                    app.workspace.setActiveLeaf(leaf, { focus: true });
+                    (app as any).commands.executeCommandById('daily-notes:goto-prev');
+                    } else {   
+                    (app as any).commands.executeCommandById('daily-notes');
+                    }
+                }}
+                >←</button>
+
                 <button onClick={() => {
                     window.focus();
-                    (app as any)?.commands.executeCommandById('daily-notes:goto-next')
-                    console.log(this.app);
-                    console.log((app as any)?.commands.listCommands());
-
+                    const leaf = app.workspace.getLeavesOfType('markdown')?.[0];
+                    if (leaf) {
+                    app.workspace.setActiveLeaf(leaf, { focus: true });
+                    (app as any).commands.executeCommandById('daily-notes:goto-next');
+                    } else {   
+                    (app as any).commands.executeCommandById('daily-notes');
+                    }
                 }}
-                >Next Note</button>
+                >→</button>
+
             </header>
         </div>
     )

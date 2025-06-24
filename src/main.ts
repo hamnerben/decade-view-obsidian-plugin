@@ -1,4 +1,4 @@
-import { Plugin, WorkspaceLeaf, setIcon } from "obsidian";
+import { Plugin, WorkspaceLeaf, setIcon, App } from "obsidian";
 import { getAllDailyNotes, getDateUID } from "obsidian-daily-notes-interface";
 
 import { DecadeView, DECADE_VIEW } from "./view";  // todo: remove createDailyNotesStore from here
@@ -15,14 +15,8 @@ export default class DailyNotePlugin extends Plugin {
            
     );
 
-    this.addRibbonIcon("calendar", "testing", () => {
-      console.log(this.app);
-      (this.app as any)?.commands.executeCommandById('daily-notes:goto-next');
-      console.log((this.app as any)?.commands.listCommands());
-    });
-
     this.addRibbonIcon("calendar-clock", "Decade View", () => {
-      this.activateView();
+      this.toggleDecadeView();
       console.log("activateView");
     });
 
@@ -31,24 +25,24 @@ export default class DailyNotePlugin extends Plugin {
   async onunload() {
   }
 
-  async activateView() {
-    const { workspace } = this.app;
+async toggleDecadeView() {
+  const { workspace } = this.app;
+  const leaves = workspace.getLeavesOfType(DECADE_VIEW);
 
-    let leaf: WorkspaceLeaf | null = null;
-    const leaves = workspace.getLeavesOfType(DECADE_VIEW);
-
-    if (leaves.length > 0) {
-      // A leaf with our view already exists, use that
-      leaf = leaves[0];
-    } else {
-      // Our view could not be found in the workspace, create a new leaf
-      // in the right sidebar for it
-      leaf = workspace.getRightLeaf(false);
-      await leaf!.setViewState({ type: DECADE_VIEW, active: true });
+  if (leaves.length > 0) {
+    // Decade view is already open → close it
+    for (const leaf of leaves) {
+      leaf.detach();
     }
-
-    // "Reveal" the leaf in case it is in a collapsed sidebar
-    workspace.revealLeaf(leaf!);
-    
+  } else {
+    // Decade view is not open → open it
+    const leaf = workspace.getRightLeaf(false);
+    if (!leaf) {
+      console.error("No right leaf available to open Decade View.");
+      return;
+    }
+    await leaf.setViewState({ type: DECADE_VIEW, active: true });
+    workspace.revealLeaf(leaf);
   }
+}
 }

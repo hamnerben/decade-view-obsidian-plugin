@@ -61,14 +61,6 @@ export class DecadeView extends ItemView {
 		this.root?.render(
 			<StrictMode>
 				<AppContext.Provider value={this.passedApp}>
-					<button
-						onClick={() => {
-							console.log(this.passedApp);
-							console.log((this.passedApp as any).commands.listCommands());
-						}}
-					>
-						view context
-					</button>
 					<Header />
 					<div style={{ paddingTop: "100px" }}>{donuts}</div>
 				</AppContext.Provider>
