@@ -5,6 +5,7 @@ import { DecadeView, DECADE_VIEW } from "./view";  // todo: remove createDailyNo
 
 
 export default class DailyNotePlugin extends Plugin {
+public lastMarkdownLeaf: WorkspaceLeaf | null = null;
   
 
   async onload() {
@@ -19,6 +20,15 @@ export default class DailyNotePlugin extends Plugin {
       this.toggleDecadeView();
       console.log("activateView");
     });
+
+
+this.registerEvent(
+  this.app.workspace.on("active-leaf-change", (leaf) => {
+    if (leaf?.view.getViewType() === "markdown") {
+      this.lastMarkdownLeaf = leaf;
+    }
+  })
+);
 
   }
 

@@ -20,7 +20,7 @@ export default function Header() {
                 style={{ marginRight: '1em' }}
                 onClick={() => {
                     window.focus();
-                    const leaf = app.workspace.getLeavesOfType('markdown')?.[0];
+                    const leaf = this.lastMarkdownLeaf ?? app.workspace.getLeavesOfType('markdown')[0];
                     if (leaf) {
                     app.workspace.setActiveLeaf(leaf, { focus: true });
                     (app as any).commands.executeCommandById('daily-notes:goto-prev');
