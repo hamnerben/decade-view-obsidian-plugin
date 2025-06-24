@@ -10,20 +10,22 @@ export default function Header() {
             position: 'fixed',
             width: '100%',
         }}>
-        <header style={{ 
-            top: 0, 
-            left: 0, 
-            margin: 0,
-            backgroundColor: background, 
-            padding: '1em',  }}>
-            <button onClick={() => {
-                const commandtoExecute =  () => {app?.commands.executeCommandById('daily-notes:goto-next')}
-                commandtoExecute();
-                console.log(commandtoExecute());
-                
-            }}
-            >Next Note</button>
-        </header>
+            <header style={{
+                top: 0,
+                left: 0,
+                margin: 0,
+                backgroundColor: background,
+                padding: '1em',
+            }}>
+                <button onClick={() => {
+                    window.focus();
+                    (app as any)?.commands.executeCommandById('daily-notes:goto-next')
+                    console.log(this.app);
+                    console.log((app as any)?.commands.listCommands());
+
+                }}
+                >Next Note</button>
+            </header>
         </div>
     )
 }

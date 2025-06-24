@@ -1,19 +1,23 @@
-import { StrictMode } from "react";
+import { StrictMode, useState, useEffect } from "react";
 import { createRoot, Root } from "react-dom/client";
 import { ItemView, WorkspaceLeaf, debounce } from "obsidian";
 import Donut from "./components/Donut";
 import { createDailyNotesStore, getYearData } from "./yearData";
 import Header from "./components/Header";
 import { AppContext } from "./contexts/AppContext";
-
+import { App } from "obsidian";
 export const DECADE_VIEW = "decade-view";
+
 
 export class DecadeView extends ItemView {
 	root: Root | null = null;
 
-	constructor(leaf: WorkspaceLeaf) {
+	passedApp: App;
+
+	constructor(app: App, leaf: WorkspaceLeaf) {
 		super(leaf);
 		icon: "calendar-clock";
+		this.passedApp = app;
 	}
 
 	getViewType() {
@@ -56,7 +60,15 @@ export class DecadeView extends ItemView {
 
 		this.root?.render(
 			<StrictMode>
-				<AppContext.Provider value={this.app}>
+				<AppContext.Provider value={this.passedApp}>
+					<button
+						onClick={() => {
+							console.log(this.passedApp);
+							console.log((this.passedApp as any).commands.listCommands());
+						}}
+					>
+						view context
+					</button>
 					<Header />
 					<div style={{ paddingTop: "100px" }}>{donuts}</div>
 				</AppContext.Provider>

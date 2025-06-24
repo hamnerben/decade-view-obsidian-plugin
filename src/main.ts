@@ -5,17 +5,20 @@ import { DecadeView, DECADE_VIEW } from "./view";  // todo: remove createDailyNo
 
 
 export default class DailyNotePlugin extends Plugin {
+  
+
   async onload() {
     
     this.registerView(
       DECADE_VIEW,
-      (leaf) => new DecadeView(leaf)
+      (leaf) => new DecadeView(this.app, leaf)
            
     );
 
-    this.addRibbonIcon("calendar", "next note", () => {
-      this.app?.commands.executeCommandById("daily-notes:goto-next")
+    this.addRibbonIcon("calendar", "testing", () => {
       console.log(this.app);
+      this.app.commands.executeCommandById('daily-notes:goto-next');
+      console.log(this.app.commands.listCommands());
     });
 
     this.addRibbonIcon("calendar-clock", "Decade View", () => {
