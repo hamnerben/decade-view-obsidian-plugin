@@ -17,8 +17,8 @@ export default class DailyNotePlugin extends Plugin {
 
     this.addRibbonIcon("calendar", "testing", () => {
       console.log(this.app);
-      this.app.commands.executeCommandById('daily-notes:goto-next');
-      console.log(this.app.commands.listCommands());
+      (this.app as any)?.commands.executeCommandById('daily-notes:goto-next');
+      console.log((this.app as any)?.commands.listCommands());
     });
 
     this.addRibbonIcon("calendar-clock", "Decade View", () => {
