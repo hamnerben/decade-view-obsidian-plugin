@@ -1,75 +1,81 @@
-import {StrictMode} from "react";
-import {createRoot, Root} from "react-dom/client";
+import { StrictMode, useState, useEffect } from "react";
+import { createRoot, Root } from "react-dom/client";
 import { ItemView, WorkspaceLeaf, debounce } from "obsidian";
 import Donut from "./components/Donut";
-import {createDailyNotesStore, getYearData} from "./yearData"
-
+import { createDailyNotesStore, getYearData } from "./yearData";
+import Header from "./components/Header";
+import { AppContext } from "./contexts/AppContext";
+import { App } from "obsidian";
 export const DECADE_VIEW = "decade-view";
 
 
-
 export class DecadeView extends ItemView {
-  root: Root | null = null;
+	root: Root | null = null;
 
-    constructor(leaf: WorkspaceLeaf) {
-      super(leaf);
-      icon: "calendar-clock";
-    }
-  
-    getViewType() {
-      return DECADE_VIEW;
-    }
-  
-    getDisplayText() {
-      return "Decade-View";
-    }
-    
-    getIcon(): string {
-      return "calendar-clock";
-    }
-  
-    async onOpen() {
-      console.log("opening");
+	passedApp: App;
 
-      this.registerEvent(this.app.workspace.on("active-leaf-change", this.onActiveFileChange.bind(this)));
+	constructor(app: App, leaf: WorkspaceLeaf) {
+		super(leaf);
+		icon: "calendar-clock";
+		this.passedApp = app;
+	}
 
-      this.root = createRoot(this.containerEl.children[1]);
-    
-      this.renderView();
+	getViewType() {
+		return DECADE_VIEW;
+	}
 
-    }
+	getDisplayText() {
+		return "Decade-View";
+	}
 
-    onActiveFileChange = debounce(() => {
-      // console.log("active file changed");
-      this.renderView();
-    }, 300);
+	getIcon(): string {
+		return "calendar-clock";
+	}
 
+	async onOpen() {
+		this.registerEvent(
+			this.app.workspace.on(
+				"active-leaf-change",
+				this.onActiveFileChange.bind(this)
+			)
+		);
 
-renderView() {
-  const years = createDailyNotesStore();
-  const activeFile = this.app.workspace.getActiveFile();
-  const donuts = [...years.entries()].map(([year, notes]) => {
-    const yearData = getYearData(year, notes, activeFile);
-    return <Donut key={year} year={year} data={yearData} />;  // append the donut
-  });
+		this.root = createRoot(this.containerEl.children[1]);
 
-  this.root?.render(
-    <StrictMode>
-    <h4 >Decade View</h4>
-    <div >
-    {donuts}
-    </div>
-    </StrictMode>
-);
-   
-    }
-  
-    async onClose() {
-      if (this.root) {
-        this.root.unmount();  // Unmount React components
-        this.root = null;     // Clean up the root reference
-      }
-    }
+		this.renderView();
+	}
 
+	onActiveFileChange = debounce(() => {
+		// console.log("active file changed");
+		this.renderView();
+	}, 300);
 
-  }
+	renderView() {
+		const years = createDailyNotesStore();
+		const activeFile = this.app.workspace.getActiveFile();
+		const donuts = [...years.entries()].map(([year, notes]) => {
+			const yearData = getYearData(year, notes, activeFile);
+			return <Donut key={year} year={year} data={yearData} />; // append the donut
+		});
+
+		// Get the lastMarkdownLeaf from the plugin instance
+		const plugin = (this.app as any).plugins?.plugins['Decade-View-Obsidian-Plugin'] as any;
+		const lastMarkdownLeaf = plugin?.lastMarkdownLeaf || null;
+
+		this.root?.render(
+			<StrictMode>
+				<AppContext.Provider value={{ app: this.passedApp, lastMarkdownLeaf }}>
+					<Header />
+					<div style={{ paddingTop: "100px" }}>{donuts}</div>
+				</AppContext.Provider>
+			</StrictMode>
+		);
+	}
+
+	async onClose() {
+		if (this.root) {
+			this.root.unmount(); // Unmount React components
+			this.root = null; // Clean up the root reference
+		}
+	}
+}

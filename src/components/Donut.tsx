@@ -81,7 +81,15 @@ export default function Donut({ year, data }: { year: number, data: any }) {
 			  }) 
 			.attr("stroke", strokeColor)
 			.style("stroke-width", ".2px")
-			.style("opacity", 0.7);
+			.style("opacity", 0.7)
+			.on("click", (event, d) => {
+				console.log("Clicked on week:", d.data.week);
+    const file = d.data.notes[0]?.file;
+    if (file) {
+      // Open the file using the global app object
+      (window as any).app.workspace.getLeaf(true).openFile(file);
+    }
+  });
 
 		svg.append("text")
 			.attr("class", "title")

@@ -13,10 +13,10 @@
 - [X] 1 pt - **display donut in obsidian**
 - [X] 2 pt - **hook up donut with data**
 - [X] 1 pt - **hook up colors** 
-- [ ] 1 pt - **in focus view pops to active year**
-- [ ] 1 pt - **command to open decade view AND change icon** 
-- [ ] 1 pt - **next journal entry and previous journal entry button**
-
+- [X] 1 pt - **command to open decade view AND change icon** 
+- [X] 3 pt - **next journal entry and previous journal entry button**
+- [X] 1 pt - **clickable weeks**
+- [ ] 2 pt - **active note is grabbed for the arrow buttons**
 
 ## Completed Stories
 
