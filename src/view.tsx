@@ -58,9 +58,13 @@ export class DecadeView extends ItemView {
 			return <Donut key={year} year={year} data={yearData} />; // append the donut
 		});
 
+		// Get the lastMarkdownLeaf from the plugin instance
+		const plugin = (this.app as any).plugins?.plugins['Decade-View-Obsidian-Plugin'] as any;
+		const lastMarkdownLeaf = plugin?.lastMarkdownLeaf || null;
+
 		this.root?.render(
 			<StrictMode>
-				<AppContext.Provider value={this.passedApp}>
+				<AppContext.Provider value={{ app: this.passedApp, lastMarkdownLeaf }}>
 					<Header />
 					<div style={{ paddingTop: "100px" }}>{donuts}</div>
 				</AppContext.Provider>

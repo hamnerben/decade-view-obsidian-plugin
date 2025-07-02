@@ -1,12 +1,15 @@
 import { createContext, useContext } from 'react';
-import { App } from 'obsidian';
+import { App, WorkspaceLeaf } from 'obsidian';
 
-export const AppContext = createContext<App | undefined>(undefined);
+export const AppContext = createContext<{
+	app: App;
+	lastMarkdownLeaf: WorkspaceLeaf | null;
+} | undefined>(undefined);
 
-export const useApp = (): App => {
-	const app = useContext(AppContext);
-	if (!app) {
+export const useApp = (): { app: App; lastMarkdownLeaf: WorkspaceLeaf | null } => {
+	const context = useContext(AppContext);
+	if (!context) {
 		throw new Error("useApp must be used within an AppContext.Provider");
 	}
-	return app;
+	return context;
 };

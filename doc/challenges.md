@@ -11,3 +11,5 @@
 5. The obsidian CSS is very strong. I think I might need to simplify the UI by just highlighting a cell if it has at least 1 note in that week.  Then I will make an interface on the right that allows navigation through the week.
 
 **11-6-24** - The app instance is not registering all the commands. It seems like I might need to delay the instantiation of the app. I will try that next time.
+
+24-06-25 - I ended up just passing the request to do the command from the view to the 
